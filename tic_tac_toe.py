@@ -7,7 +7,7 @@ XO = 'x'
 winner = None
 draw = None
 
-#screen
+#setting up the screen and game window
 width = 400
 height = 400
 pygame.init()
@@ -25,7 +25,7 @@ x_img = pygame.transform.scale(x_img, (80, 80))
 o_img = pygame.transform.scale(o_img, (80, 80))
 
 
-#initializing game
+#initializing game by drawing the board
 def opening_screen():
     time.sleep(3)
     screen.fill(white)
@@ -35,6 +35,7 @@ def opening_screen():
     pygame.draw.line(screen, black, (0, height/3*2), (width, height/3*2), 7)
     status()
 
+#check whether or not the game will continue or end in a draw
 def status():
     global draw
     if winner is None:
@@ -51,7 +52,7 @@ def status():
     pygame.display.update()
 
 
-#game win
+#determine how someone wins and who the winner is
 def to_win():
     global board, winner, draw
     for row in range(0, 3):
@@ -74,7 +75,8 @@ def to_win():
         draw = True
     status()
 
-#playing game two players
+    
+#playing the game with two players
 def placeXO(row, col):
     global board, XO
     if row == 1:
@@ -98,6 +100,7 @@ def placeXO(row, col):
         XO = 'x'
     pygame.display.update()
 
+#identifying where the player clicks to place their move
 def click():
     x, y = pygame.mouse.get_pos()
     if x < width / 3:
@@ -121,10 +124,8 @@ def click():
         placeXO(row, col)
         to_win()
 
-def ai_move():
-    screen.blit(o_img, (width / 3 + 30, height / 3 + 30))
-
-#continue game
+        
+#continue the game after the result
 def reset():
     global board, winner, XO, draw
     time.sleep(3)
@@ -134,8 +135,7 @@ def reset():
     winner = None
     board = [[None]*3, [None]*3, [None]*3]
 
-#start game
-
+#starting the game on opening
 def main():
     opening_screen()
     while True:
@@ -153,6 +153,7 @@ def main():
                     sys.exit()
         pygame.display.update()
 
+        
 while True:
     if __name__ == '__main__':
         main() 
